@@ -49,7 +49,7 @@ public class Battlefield {
 	}
 
 	private boolean isShipColliding(Ship ship) {
-		for(Ship checkedShip: ships){
+		for(Ship checkedShip : ships){
 			if (checkedShip.isCollide(ship)){
 				return true;
 			}
@@ -68,8 +68,8 @@ public class Battlefield {
 	}
 
 	private boolean isPositionInsideBounds(Position position) {
-		int x = position.getX();
-		int y = position.getY();
+		int x = position.x;
+		int y = position.y;
 		if (x >= 0 && x < width && y >= 0 && y < height) {
 			return true;
 		} else {

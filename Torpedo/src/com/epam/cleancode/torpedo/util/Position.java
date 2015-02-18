@@ -8,8 +8,8 @@ package com.epam.cleancode.torpedo.util;
  */
 public class Position {
 
-	private final int x;
-	private final int y;
+	public final int x;
+	public final int y;
 
 	/**
 	 * Create a new position at the given coordinates.
@@ -20,14 +20,6 @@ public class Position {
 		super();
 		this.x = x;
 		this.y = y;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
 	}
 
 	@Override

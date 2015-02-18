@@ -9,26 +9,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.cleancode.torpedo.ship.Ship;
 
-// TODO add dependency to BattleField OR refactor to return List<Ship> that can be given to BattleField
 public class ShipsFileReader {
 
-	public static void buildShipsFromFile(String file) {
+	public static List<Ship> buildShipsFromFile(String file) throws IOException {
 		Path path = FileSystems.getDefault().getPath(file);
 		List<Position> shipPosition = new ArrayList<>();
 		Position position;
-		try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-		    String line = null;
-		    while ((line = reader.readLine()) != null) {
-		       if(line.indexOf('x') != -1) {
-		    	   // TODO think of a way to detect collision checking
-		       }
-		       
-		       
-		    }
-		    
-		} catch (IOException x) {
-		    System.err.format("IOException: %s%n", x);
+		BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			if (line.indexOf('x') != -1) {
+				// TODO think of a way to detect collision checking
+			}
 		}
 	}
 }

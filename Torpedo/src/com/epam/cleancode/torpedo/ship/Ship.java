@@ -14,31 +14,35 @@ import com.epam.cleancode.torpedo.util.Position;
 public abstract class Ship {
 
 	protected List<Position> body;
-	protected List<Position> dangerZone;
- 	// TODO collision handling
-	
-	
+	protected List<Position> aura;
+
+	// TODO collision handling
+
 	public Ship(List<Position> body) {
 		this.body = body;
+		createAura();
 	}
-	
-	public void generateDangerZone(List<Position> dangerZone){
-		for (Position bodyPartCoordinate: body){
-			// THIS IS BAAAAD, this adds ship coordinates too, fix it!!!
-			dangerZone.add(new Position(bodyPartCoordinate.getX() + 1,  bodyPartCoordinate.getY()));
-			dangerZone.add(new Position(bodyPartCoordinate.getX() - 1,  bodyPartCoordinate.getY()));
-			dangerZone.add(new Position(bodyPartCoordinate.getX()	,  bodyPartCoordinate.getY() + 1));
-			dangerZone.add(new Position(bodyPartCoordinate.getX()	,  bodyPartCoordinate.getY() - 1));
-			dangerZone.add(new Position(bodyPartCoordinate.getX() + 1,  bodyPartCoordinate.getY() + 1));
-			dangerZone.add(new Position(bodyPartCoordinate.getX() - 1,  bodyPartCoordinate.getY() - 1));
-			dangerZone.add(new Position(bodyPartCoordinate.getX() + 1,  bodyPartCoordinate.getY() - 1));
-			dangerZone.add(new Position(bodyPartCoordinate.getX() - 1,  bodyPartCoordinate.getY() + 1));
+
+	private void createAura() {
+		for (Position part : body) {
+			// @formatter:off
+			aura.add(new Position(part.x + 1,  part.y    ));
+			aura.add(new Position(part.x + 1,  part.y + 1));
+			aura.add(new Position(part.x    ,  part.y + 1));
+			aura.add(new Position(part.x - 1,  part.y + 1));
+			aura.add(new Position(part.x - 1,  part.y    ));
+			aura.add(new Position(part.x - 1,  part.y - 1));
+			aura.add(new Position(part.x    ,  part.y - 1));
+			aura.add(new Position(part.x + 1,  part.y - 1));
+			// @formatter:on
 		}
 	}
 
 	/**
 	 * Checks if the ship got hit from a torpedo to the given position.
-	 * @param position the position of the impact
+	 * 
+	 * @param position
+	 *            the position of the impact
 	 * @return whether the ship got hit
 	 */
 	public boolean isHit(final Position position) {
@@ -58,8 +62,8 @@ public abstract class Ship {
 	}
 
 	public boolean isCollide(Ship checkedShip) {
-		for(Position thisShipPos: body){
-			for (Position checkedShipCoord: checkedShip.getBody()){
+		for (Position thisShipPos : body) {
+			for (Position checkedShipCoord : checkedShip.getBody()) {
 				if (thisShipPos.equals(checkedShipCoord))
 					return true;
 			}
