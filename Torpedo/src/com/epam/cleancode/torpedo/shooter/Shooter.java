@@ -9,5 +9,5 @@ public interface Shooter {
 	 * @param position the {@link Position} to shoot
 	 * @return whether the shot was successful
 	 */
-	Position shoot(Position maxRange);
+	//Position shoot(Position maxRange);
 }

@@ -37,12 +37,26 @@ public class Battlefield {
 	 * @throws IllegalArgumentException
 	 */
 	public void addShipToField(Ship ship) throws IllegalArgumentException {
-		if (isShipInsideBounds(ship)) {
-			ships.add(ship);
+		if (isShipInsideBounds(ship) ) {
+			if (!isShipColliding(ship)) {
+				ships.add(ship);
+			} else {
+				throw new IllegalArgumentException("Ship is colliding with an other ship.");
+			}
 		} else {
 			throw new IllegalArgumentException("Ship is outside of the battlefield's bounds.");
 		}
 	}
+
+	private boolean isShipColliding(Ship ship) {
+		for(Ship checkedShip: ships){
+			if (checkedShip.isCollide(ship)){
+				return true;
+			}
+		}		
+		return false;
+	}
+
 
 	private boolean isShipInsideBounds(Ship ship) {
 		for (Position part : ship.getBody()) {

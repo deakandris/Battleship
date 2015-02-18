@@ -8,7 +8,7 @@ import com.epam.cleancode.torpedo.util.Position;
  * @author Andras_Deak
  *
  */
-public class RandomShooter implements Shooter {
+public class RandomShooter  {
 
 	private Battlefield field;
 	
@@ -19,13 +19,13 @@ public class RandomShooter implements Shooter {
 	/* (non-Javadoc)
 	 * @see com.epam.cleancode.torpedo.Shooter#shoot(int, int)
 	 */
-	@Override
-	public boolean shoot(Position position) {
-		return field.getValueAt(position);
-	}
+//	@Override
+//	public Position shoot(Position position) {
+//		return field.getValueAt(position);
+//	}
 
-	public void shootUntilAllShipsAreOut(){
-		// TODO
-	}
+//	public void shootUntilAllShipsAreOut(){
+//		// TODO
+//	}
 
 }
