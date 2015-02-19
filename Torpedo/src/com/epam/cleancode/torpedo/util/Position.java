@@ -8,11 +8,11 @@ package com.epam.cleancode.torpedo.util;
  */
 public class Position {
 
-	public final int x;
-	public final int y;
+	public int x;
+	public int y;
 
 	/**
-	 * Create a new position at the given coordinates.
+	 * Creates a new position at the given coordinates.
 	 * @param x horizontal coordinate
 	 * @param y vertical coordinate
 	 */
@@ -22,6 +22,18 @@ public class Position {
 		this.y = y;
 	}
 
+	/**
+	 * Returns {@code true} if the parameter is adjacent to this position, including the trivial case of equivalence.
+	 * @param position to check
+	 * @return whether the given position is next to or equal to this position
+	 */
+	public boolean isAdjacent(Position position) {
+		if (position.x <= x+1 && position.x >= x-1 && position.y <= y+1 && position.y >= y-1) {
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -45,6 +57,11 @@ public class Position {
 		if (y != other.y)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "("+x+","+y+")";
 	}
 
 }

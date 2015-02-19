@@ -19,7 +19,8 @@ public class Battlefield {
 	 *            the horizontal length of the field
 	 * @param height
 	 *            the vertical length of the field
-	 * @throws IllegalArgumentException when arguments are lesser or equal to 0.
+	 * @throws IllegalArgumentException
+	 *             when arguments are lesser or equal to 0.
 	 */
 	public Battlefield(int width, int height) throws IllegalArgumentException {
 		if (width > 0 && height > 0) {
@@ -33,11 +34,12 @@ public class Battlefield {
 
 	/**
 	 * Add a {@link Ship} to the battlefield's list
+	 * 
 	 * @param ship
 	 * @throws IllegalArgumentException
 	 */
 	public void addShipToField(Ship ship) throws IllegalArgumentException {
-		if (isShipInsideBounds(ship) ) {
+		if (isShipInsideBounds(ship)) {
 			if (!isShipColliding(ship)) {
 				ships.add(ship);
 			} else {
@@ -49,17 +51,16 @@ public class Battlefield {
 	}
 
 	private boolean isShipColliding(Ship ship) {
-		for(Ship checkedShip : ships){
-			if (checkedShip.isCollide(ship)){
+		for (Ship checkedShip : ships) {
+			if (checkedShip.isTooClose(ship)) {
 				return true;
 			}
-		}		
+		}
 		return false;
 	}
 
-
 	private boolean isShipInsideBounds(Ship ship) {
-		for (Position part : ship.getBody()) {
+		for (Position part : ship.getHull()) {
 			if (!isPositionInsideBounds(part)) {
 				return false;
 			}

@@ -1,7 +1,9 @@
 package com.epam.cleancode.torpedo;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.util.ShipsFileReader;
 
 public class Game {
@@ -9,7 +11,8 @@ public class Game {
 	public static void main(String[] args) {
 		// TODO connect ShipsFileReader with BattleField
 		try {
-			ShipsFileReader.buildShipsFromFile("ships.txt");
+			List<Ship> ships = ShipsFileReader.buildShipsFromFile("ships.txt");
+			System.out.println(ships);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

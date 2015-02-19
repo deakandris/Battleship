@@ -11,31 +11,14 @@ import com.epam.cleancode.torpedo.util.Position;
  * @author Andras_Deak
  *
  */
-public abstract class Ship {
+public class Ship {
 
-	protected List<Position> body;
-	protected List<Position> aura;
+	protected List<Position> hull;
 
 	// TODO collision handling
 
-	public Ship(List<Position> body) {
-		this.body = body;
-		createAura();
-	}
-
-	private void createAura() {
-		for (Position part : body) {
-			// @formatter:off
-			aura.add(new Position(part.x + 1,  part.y    ));
-			aura.add(new Position(part.x + 1,  part.y + 1));
-			aura.add(new Position(part.x    ,  part.y + 1));
-			aura.add(new Position(part.x - 1,  part.y + 1));
-			aura.add(new Position(part.x - 1,  part.y    ));
-			aura.add(new Position(part.x - 1,  part.y - 1));
-			aura.add(new Position(part.x    ,  part.y - 1));
-			aura.add(new Position(part.x + 1,  part.y - 1));
-			// @formatter:on
-		}
+	public Ship(List<Position> hull) {
+		this.hull = hull;
 	}
 
 	/**
@@ -46,7 +29,7 @@ public abstract class Ship {
 	 * @return whether the ship got hit
 	 */
 	public boolean isHit(final Position position) {
-		for (final Position part : body) {
+		for (final Position part : hull) {
 			if (part.equals(position)) {
 				return true;
 			}
@@ -55,20 +38,40 @@ public abstract class Ship {
 	}
 
 	/**
-	 * @return The body of the ship as an unmodifiable list of {@link Position}-s.
+	 * Returns a read-only {@link List} of {@link Position}-s defining the hull (body) of this ship.
+	 * 
+	 * @return The hull of the ship as an unmodifiable list of positions.
 	 */
-	public List<Position> getBody() {
-		return Collections.unmodifiableList(body);
+	public List<Position> getHull() {
+		return Collections.unmodifiableList(hull);
 	}
 
-	public boolean isCollide(Ship checkedShip) {
-		for (Position thisShipPos : body) {
-			for (Position checkedShipCoord : checkedShip.getBody()) {
-				if (thisShipPos.equals(checkedShipCoord))
+	/**
+	 * Returns {@code true} if the parameter {@link Ship} is too close to this ship, meaning there is a direct
+	 * contact between the two.
+	 * 
+	 * @param shipToCheck
+	 * @return
+	 */
+	public boolean isTooClose(Ship shipToCheck) {
+		List<Position> hullToCheck = shipToCheck.getHull();
+		for (Position thisShipPos : hull) {
+			for (Position posToCheck : hullToCheck) {
+				if (thisShipPos.isAdjacent(posToCheck))
 					return true;
 			}
 		}
 		return false;
+	}
+
+	public String toAsciiArt() {
+		// TODO
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "\nShip:\n  hull=" + hull;
 	}
 
 }
