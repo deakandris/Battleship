@@ -1,5 +1,7 @@
 package com.epam.cleancode.torpedo.ship;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,12 +15,19 @@ import com.epam.cleancode.torpedo.util.Position;
  */
 public class Ship {
 
-	protected List<Position> hull;
+	private final List<Position> hull;
+	private int numberOfHits;
 
-	// TODO collision handling
+	public Ship(Position... hull) {
+		this.hull = Arrays.asList(hull);
+	}
 
 	public Ship(List<Position> hull) {
 		this.hull = hull;
+	}
+
+	public Ship(Ship ship) {
+		hull = new ArrayList<>(ship.getHull());
 	}
 
 	/**
@@ -29,21 +38,11 @@ public class Ship {
 	 * @return whether the ship got hit
 	 */
 	public boolean isHit(final Position position) {
-		for (final Position part : hull) {
-			if (part.equals(position)) {
-				return true;
-			}
+		if (hull.contains(position)) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
-	}
-
-	/**
-	 * Returns a read-only {@link List} of {@link Position}-s defining the hull (body) of this ship.
-	 * 
-	 * @return The hull of the ship as an unmodifiable list of positions.
-	 */
-	public List<Position> getHull() {
-		return Collections.unmodifiableList(hull);
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class Ship {
 	 * @param shipToCheck
 	 * @return
 	 */
-	public boolean isTooClose(Ship shipToCheck) {
+	public boolean isTooClose(final Ship shipToCheck) {
 		List<Position> hullToCheck = shipToCheck.getHull();
 		for (Position thisShipPos : hull) {
 			for (Position posToCheck : hullToCheck) {
@@ -62,6 +61,23 @@ public class Ship {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns a read-only {@link List} of {@link Position}-s defining the hull (body) of this ship.
+	 * 
+	 * @return The hull of the ship as an unmodifiable list of positions.
+	 */
+	public List<Position> getHull() {
+		return Collections.unmodifiableList(hull);
+	}
+	
+	public int getNumberOfHits() {
+		return numberOfHits;
+	}
+
+	public void increaseNumberOfHits() {
+		numberOfHits++;
 	}
 
 	public String toAsciiArt() {
