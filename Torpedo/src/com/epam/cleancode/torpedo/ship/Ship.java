@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.epam.cleancode.torpedo.util.Position;
+import com.epam.cleancode.torpedo.util.ShipPart;
 
 /**
  * A class representing a ship object.
@@ -15,14 +16,20 @@ import com.epam.cleancode.torpedo.util.Position;
  */
 public class Ship {
 
-	private final List<Position> hull;
-	private int numberOfHits;
+	private final List<ShipPart> hull;
 
 	public Ship(Position... hull) {
+		this.hull = new ArrayList<>();
+		for (Position position : hull) {
+			this.hull.add(new ShipPart(position));
+		}
+	}
+	
+	public Ship(ShipPart... hull) {
 		this.hull = Arrays.asList(hull);
 	}
 
-	public Ship(List<Position> hull) {
+	public Ship(List<ShipPart> hull) {
 		this.hull = hull;
 	}
 
@@ -30,19 +37,32 @@ public class Ship {
 		hull = new ArrayList<>(ship.getHull());
 	}
 
-	/**
-	 * Checks if the ship got hit from a torpedo to the given position.
-	 * 
-	 * @param position
-	 *            the position of the impact
+	/** Checks whether the ship have been shot at the given position and if true,
+	 * damages the corresponding part of the ship.
+	 * @param position the position of the shot
 	 * @return whether the ship got hit
 	 */
-	public boolean isHit(final Position position) {
-		if (hull.contains(position)) {
+	public boolean haveBeenShotAt(final Position position) {
+		if (isHit(position)) {
+			setDamaged(position);
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	private boolean isHit(final Position position) {
+		if (hull.contains(new ShipPart(position))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private void setDamaged(final Position position) {
+		int index = hull.indexOf(new ShipPart(position));
+		ShipPart toSet = hull.get(index);
+		toSet.setDamaged();
 	}
 
 	/**
@@ -53,10 +73,10 @@ public class Ship {
 	 * @return
 	 */
 	public boolean isTooClose(final Ship shipToCheck) {
-		List<Position> hullToCheck = shipToCheck.getHull();
-		for (Position thisShipPos : hull) {
-			for (Position posToCheck : hullToCheck) {
-				if (thisShipPos.isAdjacent(posToCheck))
+		List<ShipPart> hullToCheck = shipToCheck.getHull();
+		for (ShipPart thisShipPart : hull) {
+			for (ShipPart partToCheck : hullToCheck) {
+				if (thisShipPart.isAdjacent(partToCheck.getPosition()))
 					return true;
 			}
 		}
@@ -64,25 +84,32 @@ public class Ship {
 	}
 	
 	/**
-	 * Returns a read-only {@link List} of {@link Position}-s defining the hull (body) of this ship.
+	 * Returns a read-only {@link List} of {@link ShipPart}-s defining the hull (body) of this ship.
 	 * 
 	 * @return The hull of the ship as an unmodifiable list of positions.
 	 */
-	public List<Position> getHull() {
+	public List<ShipPart> getHull() {
 		return Collections.unmodifiableList(hull);
 	}
 	
+	/** Returns the number of hits the ship has suffered.
+	 * @return number of hits
+	 */
 	public int getNumberOfHits() {
-		return numberOfHits;
+		int result = 0;
+		for (ShipPart part : hull) {
+			if (part.isDamaged()) {
+				result++;
+			}
+		}
+		return result;
 	}
 
-	public void increaseNumberOfHits() {
-		numberOfHits++;
-	}
+
 
 	public String toAsciiArt() {
 		// TODO
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

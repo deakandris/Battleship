@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.util.Position;
+import com.epam.cleancode.torpedo.util.ShipPart;
 
 public class Battlefield {
 
@@ -60,8 +61,8 @@ public class Battlefield {
 	}
 
 	private boolean isShipInsideBounds(Ship ship) {
-		for (Position part : ship.getHull()) {
-			if (!isPositionInsideBounds(part)) {
+		for (ShipPart part : ship.getHull()) {
+			if (!isPositionInsideBounds(part.getPosition())) {
 				return false;
 			}
 		}
@@ -69,8 +70,8 @@ public class Battlefield {
 	}
 
 	private boolean isPositionInsideBounds(Position position) {
-		int x = position.x;
-		int y = position.y;
+		int x = position.getX();
+		int y = position.getY();
 		if (x >= 0 && x < width && y >= 0 && y < height) {
 			return true;
 		} else {

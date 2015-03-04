@@ -1,15 +1,15 @@
 package com.epam.cleancode.torpedo.util;
 
 /**
- * Class representing battlefield position with horizontal and vertical coordinates.
+ * Immutable class representing general position with horizontal and vertical coordinates.
  * 
  * @author Andras_Deak
  *
  */
 public class Position {
 
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 
 	/**
 	 * Creates a new position at the given coordinates.
@@ -17,7 +17,6 @@ public class Position {
 	 * @param y vertical coordinate
 	 */
 	public Position(final int x, final int y) {
-		super();
 		this.x = x;
 		this.y = y;
 	}
@@ -27,13 +26,30 @@ public class Position {
 	 * @param position to check
 	 * @return whether the given position is next to or equal to this position
 	 */
-	public boolean isAdjacent(Position position) {
+	public boolean isAdjacent(final Position position) {
 		if (position.x <= x+1 && position.x >= x-1 && position.y <= y+1 && position.y >= y-1) {
 			return true;
 		}
 		return false;
 	}
 	
+	/** Move the position by a fixed amount along both axes
+	 * @param x horizontal offset
+	 * @param y vertical offset
+	 */
+	public void moveBy(final int x, final int y) {
+		this.x += x;
+		this.y += y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,7 +60,7 @@ public class Position {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
