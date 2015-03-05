@@ -105,13 +105,6 @@ public class Ship {
 		return result;
 	}
 
-
-
-	public String toAsciiArt() {
-		// TODO
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public String toString() {
 		return "\nShip:\n  hull=" + hull;
