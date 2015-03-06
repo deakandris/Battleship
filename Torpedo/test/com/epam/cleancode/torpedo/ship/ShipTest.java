@@ -1,4 +1,4 @@
-package com.epam.cleancode.torpedo;
+package com.epam.cleancode.torpedo.ship;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.epam.cleancode.torpedo.ship.Ship;
+import com.epam.cleancode.torpedo.ship.ShipPart;
 import com.epam.cleancode.torpedo.util.Position;
-import com.epam.cleancode.torpedo.util.ShipPart;
 
 public class ShipTest {
 
@@ -37,7 +37,7 @@ public class ShipTest {
 	public void testHaveBeenShotAtShouldReturnFalseWhenArgumentIsOutsideHull() {
 		// GIVEN
 		Position toCheck = new Position(0, 0);
-		underTest = new Ship(new ShipPart(1, 2));
+		underTest = new Ship(new Position(1, 2));
 		// WHEN
 		boolean result = underTest.haveBeenShotAt(toCheck);
 		// THEN

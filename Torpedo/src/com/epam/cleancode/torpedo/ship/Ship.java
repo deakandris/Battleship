@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.epam.cleancode.torpedo.util.Position;
-import com.epam.cleancode.torpedo.util.ShipPart;
 
 /**
  * A class representing a ship object.

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epam.cleancode.torpedo.ship.Ship;
+import com.epam.cleancode.torpedo.ship.ShipPart;
 
 public class ShipsFileReader {
 

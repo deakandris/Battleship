@@ -1,6 +1,6 @@
-package com.epam.cleancode.torpedo.util;
+package com.epam.cleancode.torpedo.ship;
 
-import com.epam.cleancode.torpedo.ship.Ship;
+import com.epam.cleancode.torpedo.util.Position;
 
 /**
  * Class representing a 1×1 size part of the {@link Ship}.

@@ -1,11 +1,12 @@
 package com.epam.cleancode.torpedo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.epam.cleancode.torpedo.ship.Ship;
+import com.epam.cleancode.torpedo.ship.ShipPart;
 import com.epam.cleancode.torpedo.util.Position;
-import com.epam.cleancode.torpedo.util.ShipPart;
 
 public class Battlefield {
 
@@ -77,6 +78,17 @@ public class Battlefield {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Return the read-only list of the ships on the field.
+	 * 
+	 * @return an {@link java.util.Collections.UnmodifiableList.UnmodifiableList UnmodifiableList} of
+	 *         {@link Ship}-s
+	 * @see java.util.Collections#unmodifiableList(List)
+	 */
+	public List<Ship> getShips() {
+		return Collections.unmodifiableList(ships);
 	}
 
 	public int getWidth() {

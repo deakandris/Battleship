@@ -1,6 +1,6 @@
 package com.epam.cleancode.torpedo.shooter;
 
-import com.epam.cleancode.torpedo.Battlefield;
+import com.epam.cleancode.torpedo.BattlefieldTest;
 import com.epam.cleancode.torpedo.util.Position;
 
 /**
@@ -10,9 +10,9 @@ import com.epam.cleancode.torpedo.util.Position;
  */
 public class RandomShooter  {
 
-	private Battlefield field;
+	private BattlefieldTest field;
 	
-	public RandomShooter(Battlefield field) {
+	public RandomShooter(BattlefieldTest field) {
 		this.field = field;
 	}
 
