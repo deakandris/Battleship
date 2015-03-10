@@ -1,6 +1,5 @@
 package com.epam.cleancode.torpedo.shooter;
 
-import com.epam.cleancode.torpedo.util.Position;
 
 public interface Shooter {
 

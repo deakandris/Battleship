@@ -54,7 +54,7 @@ public class Battlefield {
 
 	private boolean isShipColliding(Ship ship) {
 		for (Ship checkedShip : ships) {
-			if (checkedShip.isTooClose(ship)) {
+			if (ship.isTooClose(checkedShip)) {
 				return true;
 			}
 		}

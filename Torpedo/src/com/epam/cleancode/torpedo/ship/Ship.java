@@ -16,13 +16,6 @@ import com.epam.cleancode.torpedo.util.Position;
 public class Ship {
 
 	private final List<ShipPart> hull;
-
-	public Ship(Position... hull) {
-		this.hull = new ArrayList<>();
-		for (Position position : hull) {
-			this.hull.add(new ShipPart(position));
-		}
-	}
 	
 	public Ship(ShipPart... hull) {
 		this.hull = Arrays.asList(hull);
@@ -42,26 +35,13 @@ public class Ship {
 	 * @return whether the ship got hit
 	 */
 	public boolean haveBeenShotAt(final Position position) {
-		if (isHit(position)) {
-			setDamaged(position);
-			return true;
-		} else {
-			return false;
+		for (ShipPart part : hull) {
+			if(position.equals(part.getPosition())) {
+				part.setDamaged();
+				return true;
+			}
 		}
-	}
-	
-	private boolean isHit(final Position position) {
-		if (hull.contains(new ShipPart(position))) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	private void setDamaged(final Position position) {
-		int index = hull.indexOf(new ShipPart(position));
-		ShipPart toSet = hull.get(index);
-		toSet.setDamaged();
+		return false;
 	}
 
 	/**

@@ -26,7 +26,7 @@ public class ShipTest {
 	public void testHaveBeenShotAtShouldReturnTrueWhenArgumentIsInsideHull() {
 		// GIVEN
 		Position toCheck = new Position(1, 2);
-		underTest = new Ship(toCheck);
+		underTest = new Ship(new ShipPart(toCheck));
 		// WHEN
 		boolean result = underTest.haveBeenShotAt(toCheck);
 		// THEN
@@ -37,7 +37,7 @@ public class ShipTest {
 	public void testHaveBeenShotAtShouldReturnFalseWhenArgumentIsOutsideHull() {
 		// GIVEN
 		Position toCheck = new Position(0, 0);
-		underTest = new Ship(new Position(1, 2));
+		underTest = new Ship(new ShipPart(1, 2));
 		// WHEN
 		boolean result = underTest.haveBeenShotAt(toCheck);
 		// THEN

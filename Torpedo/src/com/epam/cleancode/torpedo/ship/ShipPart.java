@@ -16,14 +16,14 @@ public class ShipPart {
 	 * @param x the row index of the position
 	 * @param y the column index of the position
 	 */
-	public ShipPart(int x, int y) {
+	public ShipPart(final int x, final int y) {
 		position = new Position(x, y);
 	}
 
 	/** Creates a new ship part object from a {@link Position}.
 	 * @param position the relative position of the part in the {@link Ship}
 	 */
-	public ShipPart(Position position) {
+	public ShipPart(final Position position) {
 		this.position = position;
 	}
 
@@ -40,15 +40,24 @@ public class ShipPart {
 	 * @return whether the given position is next to or equal to the ship part
 	 * @see Position#isAdjacent(Position)
 	 */
-	public boolean isAdjacent(Position position) {
+	boolean isAdjacent(final Position position) {
 		return this.position.isAdjacent(position);
+	}
+	
+	/** Move the ship part by a fixed amount along both axes
+	 * @param x horizontal offset
+	 * @param y vertical offset
+	 * @see Position#moveBy(int, int)
+	 */
+	void moveBy(final int x, final int y) {
+		position.moveBy(x, y);
 	}
 	
 	public boolean isDamaged() {
 		return damaged;
 	}
 
-	public void setDamaged() {
+	void setDamaged() {
 		damaged = true;
 	}
 
