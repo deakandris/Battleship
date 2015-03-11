@@ -99,4 +99,29 @@ public class Battlefield {
 		return height;
 	}
 
+	@Override
+	public String toString() {
+		char[][] chars = new char[height][width];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				chars[y][x] = '.';
+			}
+		}
+		for (Ship ship : ships) {
+			for (ShipPart part : ship.getHull()) {
+				Position position = part.getPosition();
+				if (part.isDamaged()) {
+					chars[position.getY()][position.getX()] =  '▓';
+				} else {
+					chars[position.getY()][position.getX()] =  '░';
+				}
+			}
+		}
+		StringBuilder builder = new StringBuilder();
+		for (int y = 0; y < height; y++) {
+			builder.append(chars[y]);
+			builder.append('\n');
+		}
+		return builder.toString();
+	}
 }

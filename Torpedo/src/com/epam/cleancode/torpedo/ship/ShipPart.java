@@ -9,7 +9,7 @@ import com.epam.cleancode.torpedo.util.Position;
  */
 public class ShipPart {
 
-	private final Position position;
+	private Position position;
 	private boolean damaged;
 	
 	/** Creates a new ship part object from relative coordinates.
@@ -47,10 +47,11 @@ public class ShipPart {
 	/** Move the ship part by a fixed amount along both axes
 	 * @param x horizontal offset
 	 * @param y vertical offset
-	 * @see Position#moveBy(int, int)
 	 */
 	void moveBy(final int x, final int y) {
-		position.moveBy(x, y);
+		int origX = position.getX();
+		int origY = position.getY();
+		position = new Position(origX + x, origY + y);
 	}
 	
 	public boolean isDamaged() {
@@ -92,6 +93,15 @@ public class ShipPart {
 	@Override
 	public String toString() {
 		return "[" + position + ", " + (damaged ? "X" : "O") + "]";
+	}
+
+	@Override
+	public ShipPart clone() {
+		ShipPart clone = new ShipPart(position);
+		if(isDamaged()) {
+			clone.setDamaged();
+		}
+		return clone;
 	}
 	
 }

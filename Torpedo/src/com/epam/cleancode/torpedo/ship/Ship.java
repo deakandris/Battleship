@@ -22,7 +22,7 @@ public class Ship {
 	}
 
 	public Ship(List<ShipPart> hull) {
-		this.hull = hull;
+		this.hull = new ArrayList<>(hull);
 	}
 
 	public Ship(Ship ship) {
@@ -62,6 +62,17 @@ public class Ship {
 		return false;
 	}
 	
+	/** Move the ship by a fixed amount along both axes
+	 * @param x horizontal offset
+	 * @param y vertical offset
+	 * @see ShipPart#moveBy(int, int)
+	 */
+	public void moveBy(final int x, final int y) {
+		for (ShipPart part : hull) {
+			part.moveBy(x, y);
+		}
+	}
+	
 	/**
 	 * Returns a read-only {@link List} of {@link ShipPart}-s defining the hull (body) of this ship.
 	 * 
@@ -86,7 +97,7 @@ public class Ship {
 
 	@Override
 	public String toString() {
-		return "\nShip:\n  hull=" + hull;
+		return "Ship:" + hull;
 	}
 
 }

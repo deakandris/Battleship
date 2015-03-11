@@ -8,8 +8,8 @@ package com.epam.cleancode.torpedo.util;
  */
 public class Position {
 
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 
 	/**
 	 * Creates a new position at the given coordinates.
@@ -31,15 +31,6 @@ public class Position {
 			return true;
 		}
 		return false;
-	}
-	
-	/** Move the position by a fixed amount along both axes
-	 * @param x horizontal offset
-	 * @param y vertical offset
-	 */
-	public void moveBy(final int x, final int y) {
-		this.x += x;
-		this.y += y;
 	}
 	
 	public int getX() {

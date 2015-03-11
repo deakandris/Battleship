@@ -8,6 +8,8 @@ import java.util.List;
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.ship.ShipPart;
 
+import static java.lang.Integer.parseInt;
+
 public class ShipBuilder {
 	public static List<Ship> buildShips(BufferedReader reader) throws IOException {
 		List<Ship> result = new ArrayList<>();
@@ -16,28 +18,63 @@ public class ShipBuilder {
 		int lineIndexInShip = 0;
 		int lineIndex = 0;
 		while ((line = reader.readLine()) != null) {
-			if (line.matches("[\\.x]+")) {
-				for (int charIndex = 0; charIndex < line.length(); charIndex++) {
-					if (line.charAt(charIndex) == 'x') {
-						shipHull.add(new ShipPart(charIndex, lineIndexInShip));
-					}
-				}
+			if (isShipLine(line)) {
+				List<Integer> shipPartIndices = parseShipLine(line);
+				List<ShipPart> shipPartsInOneLine = createShipPartsInOneLine(shipPartIndices, lineIndexInShip);
+				shipHull.addAll(shipPartsInOneLine);
 				lineIndexInShip++;
-			} else if (line.matches("[0-9]+")) {
+			} else if (isQuantityLine(line)) {
 				if (!shipHull.isEmpty()) {
-					Integer quantity = Integer.parseInt(line);
-					for(int i = 0; i < quantity; i++) {
-						result.add(new Ship(shipHull));
-					}
-					shipHull = new ArrayList<>();
+					int quantity = parseInt(line);
+					List<Ship> ships = createShipsFromCommonHull(shipHull, quantity);
+					result.addAll(ships);
 				} else {
 					throw new IOException("Syntax error in ships file: ships must be at least 1 unit long.");
 				}
 				lineIndexInShip = 0;
+				shipHull.clear();
 			} else {
 				throw new IOException("Syntax error in ships file: unidentified character at line " + lineIndex + ".");
 			}
 			lineIndex++;
+		}
+		return result;
+	}
+	
+	private static boolean isShipLine(final String line) {
+		return line.matches("[\\.x]+");
+	}
+	
+	private static List<Integer> parseShipLine(final String line) {
+		List<Integer> result = new ArrayList<>();
+		for (int charIndex = 0; charIndex < line.length(); charIndex++) {
+			if (line.charAt(charIndex) == 'x') {
+				result.add(charIndex);
+			}
+		}
+		return result;
+	}
+	
+	private static List<ShipPart> createShipPartsInOneLine(final List<Integer> shipPartIndices, final int lineIndex) {
+		List<ShipPart> result = new ArrayList<>();
+		for(Integer index : shipPartIndices) {
+			result.add(new ShipPart(index, lineIndex));
+		}
+		return result;
+	}
+	
+	private static boolean isQuantityLine(String line) {
+		return line.matches("[0-9]+");
+	}
+	
+	private static List<Ship> createShipsFromCommonHull(final List<ShipPart> hull, final int quantity) {
+		List<Ship> result = new ArrayList<>();
+		for (int i = 0; i < quantity; i++) {
+			List<ShipPart> cloneHull = new ArrayList<>();
+			for (ShipPart part : hull) {
+				cloneHull.add(part.clone());
+			}
+			result.add(new Ship(cloneHull));
 		}
 		return result;
 	}
