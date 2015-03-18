@@ -1,4 +1,4 @@
-package com.epam.cleancode.torpedo;
+package com.epam.cleancode.torpedo.battlefield;
 
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.epam.cleancode.torpedo.battlefield.Battlefield;
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.ship.ShipPart;
 import com.epam.cleancode.torpedo.util.Position;

@@ -1,11 +1,10 @@
-package com.epam.cleancode.torpedo.shipplacer;
+package com.epam.cleancode.torpedo.battlefield;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.epam.cleancode.torpedo.Battlefield;
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.util.FailedShipPlacementException;
 

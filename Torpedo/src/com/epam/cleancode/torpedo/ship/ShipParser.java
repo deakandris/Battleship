@@ -1,17 +1,14 @@
-package com.epam.cleancode.torpedo.util;
+package com.epam.cleancode.torpedo.ship;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.epam.cleancode.torpedo.ship.Ship;
-import com.epam.cleancode.torpedo.ship.ShipPart;
-
 import static java.lang.Integer.parseInt;
 
-public class ShipBuilder {
-	public static List<Ship> buildShips(BufferedReader reader) throws IOException {
+public class ShipParser {
+	public static List<Ship> parseShips(BufferedReader reader) throws IOException {
 		List<Ship> result = new ArrayList<>();
 		List<ShipPart> shipHull = new ArrayList<>();
 		String line = null;

@@ -1,4 +1,4 @@
-package com.epam.cleancode.torpedo;
+package com.epam.cleancode.torpedo.battlefield;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.ship.ShipPart;
+import com.epam.cleancode.torpedo.util.FailedShipPlacementException;
 import com.epam.cleancode.torpedo.util.Position;
 
 public class Battlefield {
@@ -13,6 +14,7 @@ public class Battlefield {
 	private final List<Ship> ships;
 	private final int width;
 	private final int height;
+	private final ShipPlacer placer;
 
 	/**
 	 * Create a new battlefield with the given parameters.
@@ -24,7 +26,7 @@ public class Battlefield {
 	 * @throws IllegalArgumentException
 	 *             when arguments are lesser or equal to 0.
 	 */
-	public Battlefield(int width, int height) throws IllegalArgumentException {
+	public Battlefield(int width, int height, ShipPlacer placer) throws IllegalArgumentException {
 		if (width > 0 && height > 0) {
 			this.width = width;
 			this.height = height;
@@ -32,15 +34,20 @@ public class Battlefield {
 		} else {
 			throw new IllegalArgumentException("Arguments must be greater than 0.");
 		}
+		this.placer = placer;
 	}
 
+	public void generateBattlefield(List<Ship> ships) throws FailedShipPlacementException {
+		placer.placeShipsOnBattlefield(ships, this);
+	}
+	
 	/**
 	 * Add a {@link Ship} to the battlefield's list
 	 * 
 	 * @param ship
 	 * @throws IllegalArgumentException
 	 */
-	public void addShipToField(Ship ship) throws IllegalArgumentException {
+	void addShipToField(Ship ship) throws IllegalArgumentException {
 		if (isShipInsideBounds(ship)) {
 			if (!isShipColliding(ship)) {
 				ships.add(ship);
@@ -87,15 +94,15 @@ public class Battlefield {
 	 *         {@link Ship}-s
 	 * @see java.util.Collections#unmodifiableList(List)
 	 */
-	public List<Ship> getShips() {
+	List<Ship> getShips() {
 		return Collections.unmodifiableList(ships);
 	}
 
-	public int getWidth() {
+	int getWidth() {
 		return width;
 	}
 
-	public int getHeight() {
+	int getHeight() {
 		return height;
 	}
 

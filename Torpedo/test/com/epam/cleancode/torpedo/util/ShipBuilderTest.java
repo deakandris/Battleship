@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.epam.cleancode.torpedo.ship.Ship;
+import com.epam.cleancode.torpedo.ship.ShipParser;
 
 public class ShipBuilderTest {
 	
@@ -32,7 +33,7 @@ public class ShipBuilderTest {
 		List<Ship> result;
 		try {
 			// WHEN
-			result = ShipBuilder.buildShips(reader);
+			result = ShipParser.parseShips(reader);
 			// THEN
 			int firstX = result.get(0).getHull().get(0).getPosition().getX();
 			int firstY = result.get(0).getHull().get(0).getPosition().getY();

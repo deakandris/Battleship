@@ -7,7 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class ShipsFileReader {
+public class FileReaderFactory {
 
 	public static BufferedReader createReader(String file) throws IOException {
 		Path path = FileSystems.getDefault().getPath(file);
