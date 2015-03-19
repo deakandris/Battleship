@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.epam.cleancode.torpedo.connection.FireResponse;
 import com.epam.cleancode.torpedo.util.Position;
 
 /**
@@ -34,14 +35,26 @@ public class Ship {
 	 * @param position the position of the shot
 	 * @return whether the ship got hit
 	 */
-	public boolean haveBeenShotAt(final Position position) {
+	public FireResponse haveBeenShotAt(final Position position) {
 		for (ShipPart part : hull) {
 			if(position.equals(part.getPosition())) {
 				part.setDamaged();
-				return true;
+				if(isDestroyed()) {
+					return FireResponse.SUNK;
+				}
+				return FireResponse.HIT;
 			}
 		}
-		return false;
+		return FireResponse.MISS;
+	}
+	
+	public boolean isDestroyed() {
+		for (ShipPart part : hull) {
+			if (!part.isDamaged()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -55,7 +68,7 @@ public class Ship {
 		List<ShipPart> hullToCheck = shipToCheck.getHull();
 		for (ShipPart thisShipPart : hull) {
 			for (ShipPart partToCheck : hullToCheck) {
-				if (thisShipPart.isAdjacent(partToCheck.getPosition()))
+				if (thisShipPart.isAdjacent(partToCheck))
 					return true;
 			}
 		}

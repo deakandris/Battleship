@@ -5,7 +5,7 @@ import com.epam.cleancode.torpedo.util.Position;
 
 public class MessageParser {
 
-	public static Position parseCoordinate(String message) {
+	public static Position parsePosition(String message) throws MalformedMessageException {
 		String[] parts = message.split(" ");
 		if (parts.length == 3) {
 			int width = Integer.parseInt(parts[1]);

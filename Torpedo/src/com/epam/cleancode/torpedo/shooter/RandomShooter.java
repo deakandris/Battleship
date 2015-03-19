@@ -1,9 +1,10 @@
 package com.epam.cleancode.torpedo.shooter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
-import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.util.Position;
 
 /**
@@ -14,65 +15,53 @@ import com.epam.cleancode.torpedo.util.Position;
  */
 public class RandomShooter implements Shooter {
 
-	private int width;
-	private int height;
+	private final int width;
+	private final int height;
 	private Position lastShot;
-	private boolean lastShotWasHit;
-	private List<Position> whereNotToShoot;
-	private List<Ship> ships;
+	private final Set<Position> whereNotToShoot = new HashSet<>();
+	private final Set<Position> whereToShoot = new HashSet<>();
 
-	public RandomShooter(int width, int height, List<Ship> ships) {
+	public RandomShooter(int width, int height) {
 		super();
 		this.width = width;
 		this.height = height;
-		this.ships = ships;
 	}
 
 	@Override
 	public void lastShotMissed() {
-		lastShotWasHit = false;
 	}
 
 	@Override
 	public void lastShotHit() {
-		lastShotWasHit = true;
+		whereToShoot.addAll(lastShot.getAdjacentPositions());
 	}
 
 	@Override
 	public void lastShotSunkShip() {
-		// TODO implement
-		// don't care about it more
-		lastShotWasHit = false;
+		whereToShoot.clear();
 	}
 
 	@Override
-	public void setGameOver() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Object whereToShoot() {
+	public Position shoot() {
 		Position toShoot;
-		do {
-			int x = new Random().nextInt(width);
-			int y = new Random().nextInt(height);
-			toShoot = new Position(x, y);
-		} while(whereNotToShoot.contains(toShoot));
-		lastShot = toShoot;
-		whereNotToShoot.add(toShoot);
+		if (!whereToShoot.isEmpty()) {
+			Iterator<Position> iterator = whereToShoot.iterator();
+			toShoot = iterator.next();
+			iterator.remove();
+		} else {
+			do {
+				toShoot = getRandomPosition();
+			} while (whereNotToShoot.contains(toShoot));
+			lastShot = toShoot;
+			whereNotToShoot.add(toShoot);
+		}
 		return toShoot;
 	}
 
-	@Override
-	public boolean isGameOver() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getResultFromEnemyFire(Position enemyShootAt) {
-		// TODO Auto-generated method stub
-		return null;
+	private Position getRandomPosition() {
+		int x = new Random().nextInt(width);
+		int y = new Random().nextInt(height);
+		Position toShoot = new Position(x, y);
+		return toShoot;
 	}
 }

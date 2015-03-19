@@ -40,8 +40,8 @@ public class ShipPart {
 	 * @return whether the given position is next to or equal to the ship part
 	 * @see Position#isAdjacent(Position)
 	 */
-	boolean isAdjacent(final Position position) {
-		return this.position.isAdjacent(position);
+	boolean isAdjacent(final ShipPart shipPart) {
+		return this.position.isAdjacent(shipPart.position);
 	}
 	
 	/** Move the ship part by a fixed amount along both axes

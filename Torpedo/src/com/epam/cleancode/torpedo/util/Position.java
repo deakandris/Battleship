@@ -1,5 +1,10 @@
 package com.epam.cleancode.torpedo.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.Math.abs;
+
 /**
  * Immutable class representing general position with horizontal and vertical coordinates.
  * 
@@ -13,8 +18,11 @@ public class Position {
 
 	/**
 	 * Creates a new position at the given coordinates.
-	 * @param x horizontal coordinate
-	 * @param y vertical coordinate
+	 * 
+	 * @param x
+	 *            horizontal coordinate
+	 * @param y
+	 *            vertical coordinate
 	 */
 	public Position(final int x, final int y) {
 		this.x = x;
@@ -22,17 +30,36 @@ public class Position {
 	}
 
 	/**
-	 * Returns {@code true} if the parameter is adjacent to this position, including the trivial case of equivalence.
-	 * @param position to check
+	 * Returns {@code true} if the parameter is adjacent to this position, including the trivial case of
+	 * equivalence.
+	 * 
+	 * @param position
+	 *            to check
 	 * @return whether the given position is next to or equal to this position
 	 */
 	public boolean isAdjacent(final Position position) {
-		if (position.x <= x+1 && position.x >= x-1 && position.y <= y+1 && position.y >= y-1) {
+		if (abs(x - position.x) <= 1 && abs(y - position.y) <= 1) {
 			return true;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Returns a {@code List} of {@code Position}-s adjacent to this {@code Position}. Adjacent means that
+	 * the difference between their coordinates are maximum 1, excluding the trivial case of equivalence.
+	 * 
+	 * @return {@link List} containing the adjacent {@link Position}-s
+	 */
+	public List<Position> getAdjacentPositions() {
+		List<Position> result = new ArrayList<>();
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				result.add(new Position(x + i, y + j));
+			}
+		}
+		return result;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -68,7 +95,7 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return "("+x+","+y+")";
+		return x + " " + y;
 	}
 
 }

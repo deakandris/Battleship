@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.epam.cleancode.torpedo.connection.FireResponse;
 import com.epam.cleancode.torpedo.ship.Ship;
 import com.epam.cleancode.torpedo.ship.ShipPart;
 import com.epam.cleancode.torpedo.util.FailedShipPlacementException;
@@ -40,7 +41,7 @@ public class Battlefield {
 	public void generateBattlefield(List<Ship> ships) throws FailedShipPlacementException {
 		placer.placeShipsOnBattlefield(ships, this);
 	}
-	
+
 	/**
 	 * Add a {@link Ship} to the battlefield's list
 	 * 
@@ -87,6 +88,32 @@ public class Battlefield {
 		}
 	}
 
+	public FireResponse getResultFromEnemyFire(Position enemyShootAt) {
+		for (Ship ship : ships) {
+			FireResponse shipResponse = ship.haveBeenShotAt(enemyShootAt);
+			switch (shipResponse) {
+			case HIT:
+				return FireResponse.HIT;
+			case SUNK:
+				if (allShipsAreOut()) {
+					return FireResponse.LOST;
+				}
+				return FireResponse.SUNK;
+			default:
+			}
+		}
+		return FireResponse.MISS;
+	}
+
+	private boolean allShipsAreOut() {
+		for (Ship ship : ships) {
+			if (!ship.isDestroyed()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Return the read-only list of the ships on the field.
 	 * 
@@ -118,9 +145,9 @@ public class Battlefield {
 			for (ShipPart part : ship.getHull()) {
 				Position position = part.getPosition();
 				if (part.isDamaged()) {
-					chars[position.getY()][position.getX()] =  '▓';
+					chars[position.getY()][position.getX()] = '▓';
 				} else {
-					chars[position.getY()][position.getX()] =  '░';
+					chars[position.getY()][position.getX()] = '░';
 				}
 			}
 		}

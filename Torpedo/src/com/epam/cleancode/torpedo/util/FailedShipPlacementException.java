@@ -1,6 +1,6 @@
 package com.epam.cleancode.torpedo.util;
 
-public class FailedShipPlacementException extends Exception {
+public class FailedShipPlacementException extends RuntimeException {
 
 	private static final long serialVersionUID = 382996118140847367L;
 

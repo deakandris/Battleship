@@ -1,6 +1,6 @@
 package com.epam.cleancode.torpedo.util;
 
-public class MalformedMessageException extends RuntimeException {
+public class MalformedMessageException extends Exception {
 
 	private static final long serialVersionUID = 5295747221697773646L;
 
