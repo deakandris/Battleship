@@ -17,7 +17,7 @@ import com.epam.cleancode.torpedo.util.Position;
 public class Ship {
 
 	private final List<ShipPart> hull;
-	
+
 	public Ship(ShipPart... hull) {
 		this.hull = Arrays.asList(hull);
 	}
@@ -30,16 +30,19 @@ public class Ship {
 		hull = new ArrayList<>(ship.getHull());
 	}
 
-	/** Checks whether the ship have been shot at the given position and if true,
-	 * damages the corresponding part of the ship.
-	 * @param position the position of the shot
+	/**
+	 * Checks whether the ship have been shot at the given position and if true, damages the corresponding part
+	 * of the ship.
+	 * 
+	 * @param position
+	 *            the position of the shot
 	 * @return whether the ship got hit
 	 */
 	public FireResponse haveBeenShotAt(final Position position) {
 		for (ShipPart part : hull) {
-			if(position.equals(part.getPosition())) {
+			if (position.equals(part.getPosition())) {
 				part.setDamaged();
-				if(isDestroyed()) {
+				if (isDestroyed()) {
 					return FireResponse.SUNK;
 				}
 				return FireResponse.HIT;
@@ -47,7 +50,7 @@ public class Ship {
 		}
 		return FireResponse.MISS;
 	}
-	
+
 	public boolean isDestroyed() {
 		for (ShipPart part : hull) {
 			if (!part.isDamaged()) {
@@ -74,10 +77,35 @@ public class Ship {
 		}
 		return false;
 	}
-	
-	/** Move the ship by a fixed amount along both axes
-	 * @param x horizontal offset
-	 * @param y vertical offset
+
+	/**
+	 * Returns {@code true} if the ship is inside the bounding box defined by the origo and the parameters as max
+	 * values along axes.
+	 * 
+	 * @param width
+	 *            the maximum value along the x axis
+	 * @param height
+	 *            the maximum value along the y axis
+	 * @return whether the ship is inside the given bounds
+	 * @see ShipPart#isInsideBounds(int, int)
+	 * @see Position#isInsideBounds(int, int)
+	 */
+	public boolean isInsideBounds(final int width, final int height) {
+		for (ShipPart part : hull) {
+			if (!part.isInsideBounds(width, height)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Move the ship by a fixed amount along both axes
+	 * 
+	 * @param x
+	 *            horizontal offset
+	 * @param y
+	 *            vertical offset
 	 * @see ShipPart#moveBy(int, int)
 	 */
 	public void moveBy(final int x, final int y) {
@@ -85,7 +113,7 @@ public class Ship {
 			part.moveBy(x, y);
 		}
 	}
-	
+
 	/**
 	 * Returns a read-only {@link List} of {@link ShipPart}-s defining the hull (body) of this ship.
 	 * 
@@ -94,8 +122,10 @@ public class Ship {
 	public List<ShipPart> getHull() {
 		return Collections.unmodifiableList(hull);
 	}
-	
-	/** Returns the number of hits the ship has suffered.
+
+	/**
+	 * Returns the number of hits the ship has suffered.
+	 * 
 	 * @return number of hits
 	 */
 	public int getNumberOfHits() {

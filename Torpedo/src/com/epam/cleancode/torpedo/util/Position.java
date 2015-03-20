@@ -45,19 +45,36 @@ public class Position {
 	}
 
 	/**
-	 * Returns a {@code List} of {@code Position}-s adjacent to this {@code Position}. Adjacent means that
-	 * the difference between their coordinates are maximum 1, excluding the trivial case of equivalence.
+	 * Returns a {@code List} of {@code Position}-s strictly adjacent to this {@code Position}. Strictly adjacent
+	 * means that they only differ in only one coordinate, and the difference is 1.
 	 * 
 	 * @return {@link List} containing the adjacent {@link Position}-s
 	 */
-	public List<Position> getAdjacentPositions() {
+	public List<Position> getStrictlyAdjacentPositions() {
 		List<Position> result = new ArrayList<>();
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				result.add(new Position(x + i, y + j));
-			}
-		}
+		result.add(new Position(x-1, y));
+		result.add(new Position(x+1, y));
+		result.add(new Position(x, y-1));
+		result.add(new Position(x, y+1));
 		return result;
+	}
+
+	/**
+	 * Returns {@code true} if the position is inside the bounding box defined by the origo and the parameters as
+	 * max values along axes.
+	 * 
+	 * @param width
+	 *            the maximum value along the x axis
+	 * @param height
+	 *            the maximum value along the y axis
+	 * @return whether the ship part is inside the given bounds
+	 */
+	public boolean isInsideBounds(int width, int height) {
+		if (x >= 0 && x < width && y >= 0 && y < height) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public int getX() {

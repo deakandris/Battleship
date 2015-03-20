@@ -18,7 +18,7 @@ import com.epam.cleancode.torpedo.util.Position;
 //import com.epam.cleancode.torpedo.utility.ui.TorpedoMainFrame;
 
 public class Game {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(Game.class);
 
 	private boolean gameOver;
@@ -29,7 +29,7 @@ public class Game {
 		shooter = new RandomShooter(width, height);
 		field = new Battlefield(width, height, new RandomShipPlacer());
 		field.generateBattlefield(ships);
-		LOGGER.info("Field generated\n" + field);
+		LOGGER.info("Field generated\n\n" + field);
 	}
 
 	public void processMyFireResult(String message) throws MalformedMessageException {
@@ -55,7 +55,11 @@ public class Game {
 
 	public FireResponse processEnemyFireAttempt(String message) throws MalformedMessageException {
 		Position enemyShootAt = MessageParser.parsePosition(message);
-		return field.getResultFromEnemyFire(enemyShootAt);
+		FireResponse result = field.getResultOfEnemyFire(enemyShootAt);
+		if (result.equals(FireResponse.LOST)) {
+			gameOver = true;
+		}
+		return result;
 	}
 
 	public Position getFirePosition() {
@@ -66,7 +70,16 @@ public class Game {
 		return gameOver;
 	}
 
-	public String getPrintableBattlefield() {
-		return field.toString();
+	@Override
+	public String toString() {
+		String[] myFieldLines = field.toString().split("\n");
+		String[] enemyFieldLines = shooter.toString().split("\n");
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < myFieldLines.length; i++) {
+			builder.append(myFieldLines[i] + "\t");
+			builder.append(enemyFieldLines[i]);
+			builder.append("\n");
+		}
+		return builder.toString();
 	}
 }

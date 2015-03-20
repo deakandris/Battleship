@@ -41,7 +41,22 @@ public class ShipPart {
 	 * @see Position#isAdjacent(Position)
 	 */
 	boolean isAdjacent(final ShipPart shipPart) {
-		return this.position.isAdjacent(shipPart.position);
+		return position.isAdjacent(shipPart.position);
+	}
+	
+	/**
+	 * Returns {@code true} if the ship part is inside the bounding box defined by the origo and the parameters
+	 * as max values along axes.
+	 * 
+	 * @param width
+	 *            the maximum value along the x axis
+	 * @param height
+	 *            the maximum value along the y axis
+	 * @return whether the ship part is inside the given bounds
+	 * @see Position#isInsideBounds(int, int)
+	 */
+	boolean isInsideBounds(final int width, final int height) {
+		return position.isInsideBounds(width, height);
 	}
 	
 	/** Move the ship part by a fixed amount along both axes
@@ -103,5 +118,5 @@ public class ShipPart {
 		}
 		return clone;
 	}
-	
+
 }

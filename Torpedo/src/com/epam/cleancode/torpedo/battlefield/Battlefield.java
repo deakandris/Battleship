@@ -13,6 +13,7 @@ import com.epam.cleancode.torpedo.util.Position;
 public class Battlefield {
 
 	private final List<Ship> ships;
+	private final List<Position> enemyShots;
 	private final int width;
 	private final int height;
 	private final ShipPlacer placer;
@@ -31,7 +32,8 @@ public class Battlefield {
 		if (width > 0 && height > 0) {
 			this.width = width;
 			this.height = height;
-			ships = new ArrayList<Ship>();
+			ships = new ArrayList<>();
+			enemyShots = new ArrayList<>();
 		} else {
 			throw new IllegalArgumentException("Arguments must be greater than 0.");
 		}
@@ -70,25 +72,13 @@ public class Battlefield {
 	}
 
 	private boolean isShipInsideBounds(Ship ship) {
-		for (ShipPart part : ship.getHull()) {
-			if (!isPositionInsideBounds(part.getPosition())) {
-				return false;
-			}
-		}
-		return true;
+		return ship.isInsideBounds(width, height);
 	}
 
-	private boolean isPositionInsideBounds(Position position) {
-		int x = position.getX();
-		int y = position.getY();
-		if (x >= 0 && x < width && y >= 0 && y < height) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	
 
-	public FireResponse getResultFromEnemyFire(Position enemyShootAt) {
+	public FireResponse getResultOfEnemyFire(Position enemyShootAt) {
+		enemyShots.add(enemyShootAt);
 		for (Ship ship : ships) {
 			FireResponse shipResponse = ship.haveBeenShotAt(enemyShootAt);
 			switch (shipResponse) {
@@ -138,7 +128,11 @@ public class Battlefield {
 		char[][] chars = new char[height][width];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				chars[y][x] = '.';
+				if(enemyShots.contains(new Position(x, y))) {
+					chars[y][x] = 'X';
+				} else {
+					chars[y][x] = '.';
+				}
 			}
 		}
 		for (Ship ship : ships) {
@@ -147,7 +141,7 @@ public class Battlefield {
 				if (part.isDamaged()) {
 					chars[position.getY()][position.getX()] = '▓';
 				} else {
-					chars[position.getY()][position.getX()] = '░';
+					chars[position.getY()][position.getX()] = '▒';
 				}
 			}
 		}

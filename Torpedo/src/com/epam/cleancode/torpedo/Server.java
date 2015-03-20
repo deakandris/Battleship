@@ -17,19 +17,20 @@ import com.epam.cleancode.torpedo.connection.Constants;
 public class Server {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
-	
-	private static final int FIELD_WIDTH = 100;
-	private static final int FIELD_HEIGHT = 100;
+
+	private static final int FIELD_WIDTH = 20;
+	private static final int FIELD_HEIGHT = 20;
 
 	public static void main(String[] args) {
 
 		long startTime = System.currentTimeMillis();
 		LOGGER.info("Server started");
-		/*
-		 * if (args.length != 1) { System.err.println("Usage: java KnockKnockServer <port number>");
-		 * System.exit(1); }
-		 */
-		// int portNumber = Integer.parseInt(args[0]);
+
+		// TODO parameters from argument
+//		if (args.length != 3) {
+//			System.err.println("Usage: java KnockKnockServer <port number> <width> <length>");
+//			System.exit(1);
+//		}
 
 		try (ServerSocket serverSocket = new ServerSocket(Constants.PORT);
 				Socket clientSocket = serverSocket.accept();

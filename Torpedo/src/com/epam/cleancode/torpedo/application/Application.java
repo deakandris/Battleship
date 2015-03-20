@@ -55,6 +55,7 @@ public abstract class Application implements Runnable {
 				fire();
 			}
 		}
+		LOGGER.info("Final status:\n\n" + game);
 		} catch (MalformedMessageException e) {
 			LOGGER.error(e.getMessage());
 			e.printStackTrace();
@@ -71,15 +72,15 @@ public abstract class Application implements Runnable {
 		String enemyFireMsg = in.readLine();
 		FireResponse fireResponse = game.processEnemyFireAttempt(enemyFireMsg);
 		out.println(fireResponse);
-		LOGGER.info("FireResponse=" + fireResponse);
+		LOGGER.info("Enemy: " + enemyFireMsg +" | Response: " + fireResponse);
 	}
 	
 	protected void fire() throws IOException, MalformedMessageException {
 		Position myFirePosition = game.getFirePosition();
 		out.println("FIRE " + myFirePosition);
-		LOGGER.info("FIRE " + myFirePosition);
 		String myFireResult = in.readLine();
 		game.processMyFireResult(myFireResult);
+		LOGGER.info("Me: FIRE " + myFirePosition + " | Response: " + myFireResult);
 	}
 
 }

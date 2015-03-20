@@ -23,11 +23,15 @@ public class Client {
 	private static final String HOST = Constants.LOCALHOST;
 
 	public static void main(String[] args) {
+		
+		long startTime = System.currentTimeMillis();
+		LOGGER.info("Client started");
 
-		/*
-		 * if (args.length != 2) { System.err.println( "Usage: java EchoClient <host name> <port number>");
-		 * System.exit(1); }
-		 */
+		// TODO parameters from argument
+//		if (args.length != 2) {
+//			System.err.println("Usage: java Client <host name> <port number>");
+//			System.exit(1);
+//		}
 
 		try (Socket socket = new Socket(HOST, Constants.PORT);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -50,12 +54,7 @@ public class Client {
 			LOGGER.error("Couldn't get I/O for the connection to " + HOST);
 			System.exit(1);
 		}
-
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			LOGGER.error(e.getMessage());
-		}
+		LOGGER.info("GAME OVER | Runtime: " + (System.currentTimeMillis() - startTime) / 1000 + " sec");
 	}
 
 }
