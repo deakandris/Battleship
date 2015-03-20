@@ -36,7 +36,9 @@ public class Server {
 				Socket clientSocket = serverSocket.accept();
 				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);) {
+			
 
+			clientSocket.setTcpNoDelay(true);
 			Application application = new ServerApplication(FIELD_WIDTH, FIELD_HEIGHT, in, out);
 			application.run();
 
