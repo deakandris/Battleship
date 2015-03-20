@@ -45,6 +45,7 @@ public class Game {
 				shooter.lastShotSunkShip();
 				break;
 			case LOST:
+				shooter.lastShotSunkShip();
 				gameOver = true;
 				break;
 			}
