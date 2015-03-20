@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.epam.cleancode.torpedo.application.Application;
 import com.epam.cleancode.torpedo.application.ClientApplication;
-import com.epam.cleancode.torpedo.connection.Constants;
 import com.epam.cleancode.torpedo.connection.MessageParser;
 import com.epam.cleancode.torpedo.util.MalformedMessageException;
 import com.epam.cleancode.torpedo.util.Position;
@@ -20,20 +19,21 @@ import com.epam.cleancode.torpedo.util.Position;
 public class Client {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Client.class);
-	private static final String HOST = Constants.LOCALHOST;
 
 	public static void main(String[] args) {
 		
 		long startTime = System.currentTimeMillis();
 		LOGGER.info("Client started");
 
-		// TODO parameters from argument
-//		if (args.length != 2) {
-//			System.err.println("Usage: java Client <host name> <port number>");
-//			System.exit(1);
-//		}
-
-		try (Socket socket = new Socket(HOST, Constants.PORT);
+		if (args.length != 2) {
+			System.err.println("Usage: java Client <host name> <port number>");
+			System.exit(1);
+		}
+		
+		final String host = args[0];
+		final int port = Integer.parseInt(args[1]);
+		
+		try (Socket socket = new Socket(host, port);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);) {
 			LOGGER.info("Trying to connect...");
@@ -48,13 +48,13 @@ public class Client {
 			}
 
 		} catch (UnknownHostException e) {
-			LOGGER.error("Don't know about host " + HOST);
+			LOGGER.error("Don't know about host " + host);
 			System.exit(1);
 		} catch (IOException e) {
-			LOGGER.error("Couldn't get I/O for the connection to " + HOST);
+			LOGGER.error("Couldn't get I/O for the connection to " + host);
 			System.exit(1);
 		}
-		LOGGER.info("GAME OVER | Runtime: " + (System.currentTimeMillis() - startTime) / 1000 + " sec");
+		LOGGER.info("GAME OVER | Runtime: " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 }
